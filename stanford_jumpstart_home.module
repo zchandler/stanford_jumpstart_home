@@ -77,7 +77,10 @@ function stanford_jumpstart_home_menu() {
  * @return [type] [description]
  */
 function stanford_jumpstart_home_dashboard() {
-  $output = "<p>Please create this functionality</p>";
+  $output = "";
+  drupal_set_title('Customize your homepage');
+
+  $output .= drupal_render(drupal_get_form('stanford_jumpstart_homepage_dashboard_form'));
 
   return $output;
 }
@@ -127,4 +130,96 @@ function stanford_jumpstart_home_get_contexts($clear_cache = FALSE) {
   cache_set('jumpstart_home_context', $contexts);
 
   return $contexts;
+}
+
+/**
+ * [stanford_jumpstart_homepage_dashboard_form description]
+ * @param  [type] $form       [description]
+ * @param  [type] $form_state [description]
+ * @return [type]             [description]
+ */
+function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
+
+  $filename = drupal_get_path('module', 'stanford_jumpstart_home') . "/stanford_jumpstart_home.info";
+  $info = drupal_parse_info_file($filename);
+  $layouts = $info['layout'];
+
+  foreach ($layouts as $key => $config) {
+    $context = context_load($config['context']);
+
+    // Field Group
+    $form[$key] = array(
+      '#type' => 'container',
+      '#attributes' => array(
+        'class' => array(
+          'homepage-layout',
+        ),
+      ),
+    );
+
+    // Move the selected option to the top of the pile!
+    if (!$context->disabled) {
+      $form[$key]['#weight'] = -10;
+    }
+
+    // Thumbnail
+    $img_path = drupal_get_path('module', 'stanford_jumpstart_home') . "/img/" . $config['thumb'];
+    $variables = array(
+      'path' => $img_path,
+      'alt' => $config['title'],
+      'title' => $config['title'],
+    );
+    $form[$key]['thumb']["#markup"] = theme_image($variables);
+
+    // Enabled
+    $class = ($context->disabled) ? "" : "selected";
+    $form[$key]['status']['#markup'] = "<div><a class=\"$class button\" name=\"". $context->name . "\" id=\"" . $context->name . "\">" . (($context->disabled) ? t("Select") : t("Selected")) . "</a></div>";
+
+    // Title
+    $form[$key]['title']['#markup'] = "<h2 class=\"title\">" . t($config['title']) . "</h2>";
+
+    // Description
+    $form[$key]['description']['#markup'] = check_markup($config['description'], 'filtered_html');
+
+    // Background Image Field
+    if (!empty($config['background_image'])) {
+      $form[$key]['background_image'] = array(
+        '#title' => t('Background Image'),
+        '#type' => 'managed_file',
+        '#description' => t('The uploaded image will be displayed on this layout as a background image.'),
+        '#default_value' => variable_get('stanford_jumpstart_home_' . $config['context'] . '_background', ''),
+        '#upload_location' => 'public://stanford_jumpstart_home/background/',
+      );
+    }
+
+    // Header Image Field
+    if (!empty($config['header_image'])) {
+      $form[$key]['header_image'] = array(
+        '#title' => t('Header Image'),
+        '#type' => 'managed_file',
+        '#description' => t('The uploaded image will be displayed on this layout as a header image.'),
+        '#default_value' => variable_get('stanford_jumpstart_home_' . $config['context'] . '_header', ''),
+        '#upload_location' => 'public://stanford_jumpstart_home/header/',
+      );
+    }
+
+    // Color picker
+    if (!empty($config['color'])) {
+      $form[$key]['color'] = array(
+        '#title' => t('Choose Color'),
+        '#type' => 'select',
+        '#description' => t('Choose the color you would like your background to be.'),
+        '#options' => array(
+          '#FF00FF' => t('Supa Pink'),
+          '#00FF00' => t('Supa Green'),
+          '#000000' => t('black'),
+        ),
+      );
+    }
+
+  }
+
+  $form['submit'] = array('#type' => 'submit', '#value' => t('Save homepage settings'));
+
+  return $form;
 }

@@ -9,3 +9,23 @@ project status url = https://github.com/SU-SWS/stanford_jumpstart_home
 # scripts[] = js/stanford_jumpstart_home.js
 
 dependencies[] = context
+dependencies[] = ctools
+
+layout[test_context_one][context]           = test_context_one
+layout[test_context_one][thumb]             = default.jpg
+layout[test_context_one][title]             = "Test Context One"
+layout[test_context_one][description]       = "This is the description about the home page layout."
+layout[test_context_one][header_image]      = TRUE
+layout[test_context_one][background_image]  = TRUE
+
+layout[test_context_two][context]           = test_context_two
+layout[test_context_two][thumb]             = default.jpg
+layout[test_context_two][title]             = "Test Context Two"
+layout[test_context_two][description]       = "This is the description about the home page layout Two."
+layout[test_context_two][color]             = TRUE
+
+layout[test_context_three][context]           = test_context_three
+layout[test_context_three][thumb]             = default.jpg
+layout[test_context_three][title]             = "Test Context Three"
+layout[test_context_three][description]       = "<ul><li>Item One.</li><li>Item two.</li><li>Item three.</li></ul>"
+layout[test_context_three][background_image]  = TRUE
