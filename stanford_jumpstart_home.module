@@ -264,9 +264,14 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
   // Include theme-settings.php
   require_once drupal_get_path('theme', 'stanford_light') . "/theme-settings.php";
   $theme_form = array();
+
+  // Set the theme temporarily
+  $GLOBALS['theme_key'] = 'stanford_light';
   stanford_light_form_system_theme_settings_alter($theme_form, $form_state);
+
   $form['design_container'] = $theme_form['design_container'];
   $form['design_container']['#attributes']["style"] = array("width: 100%;");
+  $form['design_container']['#tree'] = TRUE;
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -317,6 +322,17 @@ function stanford_jumpstart_homepage_dashboard_form_submit($form, $form_state) {
 
     variable_set('sjh_' . $config['context_name'], $config);
   }
+
+  // Save the theme settings
+  $theme_settings = variable_get('theme_stanford_light_settings', array());
+
+  foreach ($values['design_container'] as $key => $value) {
+    $theme_settings[$key] = $value;
+  }
+
+  variable_set('theme_stanford_light_settings', $theme_settings);
+
+  drupal_set_message('Customized design options saved', 'status');
 
 }
 
