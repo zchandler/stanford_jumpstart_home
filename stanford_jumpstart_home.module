@@ -161,7 +161,7 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
 
     // Move the selected option to the top of the pile!
     if (!$context->disabled) {
-      $form['layouts'][$key]['#weight'] = -10;
+      // $form['layouts'][$key]['#weight'] = -10;
       $form['layouts'][$key]["#attributes"]['class'][] = "selected";
     }
 
