@@ -259,6 +259,15 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
     }
   }
 
+  // Pull theme options from the theme itself
+
+  // Include theme-settings.php
+  require_once drupal_get_path('theme', 'stanford_light') . "/theme-settings.php";
+  $theme_form = array();
+  stanford_light_form_system_theme_settings_alter($theme_form, $form_state);
+  $form['design_container'] = $theme_form['design_container'];
+  $form['design_container']['#attributes']["style"] = array("width: 100%;");
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save settings'),
@@ -444,8 +453,5 @@ function stanford_jumpstart_home_process_page(&$vars) {
     $vars['header_bkg_path'] = $file->uri;
   }
 
-
 }
-
-
 
