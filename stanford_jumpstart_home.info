@@ -15,6 +15,7 @@ layout[test_context_one][context]           = test_context_one
 layout[test_context_one][thumb]             = default.jpg
 layout[test_context_one][title]             = "Test Context One"
 layout[test_context_one][description]       = "This is the description about the home page layout."
+layout[test_context_one][header_image]      = TRUE
 layout[test_context_one][background_image]  = TRUE
 layout[test_context_one][light_dark]        = TRUE
 
@@ -23,6 +24,7 @@ layout[test_context_two][thumb]             = default.jpg
 layout[test_context_two][title]             = "Test Context Two"
 layout[test_context_two][description]       = "This is the description about the home page layout Two."
 layout[test_context_two][color]             = TRUE
+layout[test_context_two][header_image]      = TRUE
 
 layout[test_context_three][context]           = test_context_three
 layout[test_context_three][thumb]             = default.jpg

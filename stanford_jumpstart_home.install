@@ -9,6 +9,7 @@
  * Implements hook_install().
  */
 function stanford_jumpstart_home_install() {
+  variable_set('stanford_jumpstart_home_active', 'test_context_one');
 }
 
 /**
