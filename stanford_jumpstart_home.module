@@ -62,11 +62,11 @@ function stanford_jumpstart_home_menu() {
    *  'type' => MENU_SUGGESTED_ITEM,
    *);
    */
-  $items['admin/config/stanford/customize-design'] = array(
+  $items['admin/stanford-jumpstart/customize-design'] = array(
     'title' => 'Customize Design',
     'page callback' => 'stanford_jumpstart_home_dashboard',
     'access arguments' => array('administer stanford homepage'),
-    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_LOCAL_TASK,
   );
 
   return $items;
