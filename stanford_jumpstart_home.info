@@ -14,18 +14,20 @@ dependencies[] = ctools
 layout[test_context_one][context]           = test_context_one
 layout[test_context_one][thumb]             = default.jpg
 layout[test_context_one][title]             = "Palm"
-layout[test_context_one][description]       = ""
+layout[test_context_one][description]       = "Includes:<ul><li>Tall, full-width Banner</li><li>About block</li><li>Spotlight block</li><li>Small Announcements block</li></ul>"
 layout[test_context_one][header_image]      = FALSE
 layout[test_context_one][light_dark]        = FALSE
 layout[test_context_one][background_image]  = FALSE
+layout[test_context_one][color]             = FALSE
 
 layout[test_context_two][context]           = test_context_two
 layout[test_context_two][thumb]             = default.jpg
 layout[test_context_two][title]             = "Mayfield"
-layout[test_context_two][description]       = ""
+layout[test_context_two][description]       = "Inludes:<ul><li>Big Text Block</li>"
 layout[test_context_two][header_image]      = TRUE
 layout[test_context_two][light_dark]        = TRUE
 layout[test_context_two][background_image]  = FALSE
+layout[test_context_two][color]             = FALSE
 
 layout[test_context_three][context]           = test_context_three
 layout[test_context_three][thumb]             = default.jpg
@@ -34,7 +36,7 @@ layout[test_context_three][description]       = ""
 layout[test_context_three][header_image]      = FALSE
 layout[test_context_three][light_dark]        = TRUE
 layout[test_context_three][background_image]  = FALSE
-
+layout[test_context_three][color]             = FALSE
 
 layout[test_context_four][context]           = test_context_four
 layout[test_context_four][thumb]             = default.jpg
@@ -43,7 +45,7 @@ layout[test_context_four][description]       = ""
 layout[test_context_four][header_image]      = FALSE
 layout[test_context_four][light_dark]        = TRUE
 layout[test_context_four][background_image]  = TRUE
-
+layout[test_context_four][color]             = FALSE
 
 layout[test_context_five][context]           = test_context_five
 layout[test_context_five][thumb]             = default.jpg
@@ -52,3 +54,4 @@ layout[test_context_five][description]       = ""
 layout[test_context_five][header_image]      = FALSE
 layout[test_context_five][light_dark]        = FALSE
 layout[test_context_five][background_image]  = FALSE
+layout[test_context_five][color]             = FALSE
