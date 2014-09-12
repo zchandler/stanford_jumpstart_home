@@ -144,9 +144,11 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
 
   $form['layouts']["#tree"] = TRUE;
 
-  foreach ($layouts as $key => $config) {
+  foreach ($layouts as $index => $config) {
     $context = context_load($config['context']);
     $options = variable_get('sjh_' . $context->name, array());
+
+    $key = $context->name;;
 
     // Field Group
     $form['layouts'][$key] = array(
@@ -317,9 +319,6 @@ function stanford_jumpstart_homepage_dashboard_form_submit($form, $form_state) {
  */
 function stanford_homepage_switch_context($form, $form_state) {
 
-  // Save the things.
-  stanford_jumpstart_homepage_dashboard_form_submit($form, $form_state);
-
   $values = $form_state['values'];
   $submit_button = $form_state['triggering_element'];
   $selected = $form_state["clicked_button"]['#parents'][1];
@@ -336,6 +335,8 @@ function stanford_homepage_switch_context($form, $form_state) {
   variable_set('stanford_jumpstart_home_active', $selected);
   cache_clear_all('context', 'cache');
 
+  // Save the things.
+  stanford_jumpstart_homepage_dashboard_form_submit($form, $form_state);
 }
 
 /**
