@@ -386,7 +386,14 @@ function stanford_jumpstart_home_process_html(&$vars) {
   $file = file_load($fid);
 
   if (!empty($file)) {
+    $vars['body_bg_type'] = 'photobg';
+    $vars['body_bg_classes'] = 'bodybg';
     $vars['body_bg_path'] = $file->uri;
+  }
+
+  if (!empty($settings['header_image'])) {
+    $vars['header_bkg_style'] = "header-bkg-image";
+    $vars['header_bkg'] = 'header-bkg';
   }
 
   if (isset($settings['light_dark'])) {
@@ -427,6 +434,8 @@ function stanford_jumpstart_home_process_page(&$vars) {
   $file = file_load($fid);
 
   if (!empty($file)) {
+    $vars['header_bkg_style'] = "header-bkg-image";
+    $vars['header_bkg'] = 'header-bkg';
     $vars['header_bkg_path'] = $file->uri;
   }
 
