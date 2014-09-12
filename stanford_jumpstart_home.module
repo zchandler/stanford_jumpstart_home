@@ -376,6 +376,7 @@ function stanford_jumpstart_home_process_html(&$vars) {
   }
 
   $settings = variable_get('sjh_' . $context_name, null);
+  $vars['classes'] .= " active-home-context " . drupal_clean_css_identifier($context_name);
 
   // Missing settings.
   if (is_null($settings)) {
