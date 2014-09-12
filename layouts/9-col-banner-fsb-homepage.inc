@@ -4,7 +4,7 @@
  */
 
 $context = new stdClass();
-$context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+$context->disabled = TRUE; /* Edit this to true to make a default context disabled initially */
 $context->api_version = 3;
 $context->name = '12-col-banner-nsb-homepage';
 $context->description = 'Home page layout with a 12 column banner and no sidebars';
