@@ -14,6 +14,30 @@
   height: auto;
 }
 
+.homepage-layout h2.title {
+  
+}
+
+.homepage-layout input.form-submit {
+  
+}
+
+.homepage-layout .form-item label {
+  
+}
+
+.homepage-layout .form-item div.description {
+  
+}
+
+.homepage-layout .form-radios .form-item {
+  
+}
+
+.homepage-layout .form-managed-file .form-file {
+  
+}
+
 .homepage-layout.selected {
   background: #f8fff0;
   border: 1px solid #bbee77;
