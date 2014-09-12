@@ -9,16 +9,16 @@ The Stanford Homepage module provides custom homepage layouts functionality for 
 Layouts
 ---
 
-**Superhero - Batman**
+**Superhero - Batman**   
 Description of layout goes here...
 
-**Sunset Delorean**
+**Sunset Delorean**   
 Description of layout goes here...
 
-**Koda Chrome**
+**Koda Chrome**   
 Description of layout goes here...
 
-**Magazine - Glossy**
+**Magazine - Glossy**   
 Description of layout goes here...
 
 
