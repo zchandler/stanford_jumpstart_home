@@ -141,13 +141,19 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
   $filename = drupal_get_path('module', 'stanford_jumpstart_home') . "/stanford_jumpstart_home.info";
   $info = drupal_parse_info_file($filename);
   $layouts = $info['layout'];
+  $install_profile = variable_get('install_profile', 'stanford');
 
   $form['layouts']["#tree"] = TRUE;
 
   foreach ($layouts as $index => $config) {
+
+    $allowed = explode(",", str_replace(" ", "", $config['product']));
+    if (!in_array($install_profile, $allowed)) {
+      continue;
+    }
+
     $context = context_load($config['context']);
     $options = variable_get('sjh_' . $context->name, array());
-
     $key = $context->name;;
 
     // Field Group
@@ -284,13 +290,14 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
       );
     }
 
+    // Remove these so we can check for other config.
     unset($config['context']);
     unset($config['thumb']);
     unset($config['title']);
     unset($config['description']);
+    unset($config['product']);
 
     if (count($config) >= 1) {
-
       $form['layouts'][$key]['submit'] = array(
         '#type' => 'submit',
         '#value' => t('Save settings'),
@@ -300,7 +307,6 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
           ),
         ),
       );
-
     }
 
   } // End for each loop
