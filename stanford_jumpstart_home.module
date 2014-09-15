@@ -47,6 +47,14 @@ function stanford_jumpstart_home_permission() {
       'title' => t('Administer Stanford Homepage'),
       'description' => t('Allow user to change and modify the homepage settings'),
     ),
+    'see enabled homepage options' =>  array(
+      'title' => t('See enabled options'),
+      'description' => t('Allow user to see and choose an enabled homepage option.'),
+    ),
+    'see disabled homepage options' => array(
+      'title' => t('See disabled homepage options'),
+      'description' => t('See disabled homepage options.'),
+    ),
   );
 }
 
@@ -141,20 +149,18 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
   $filename = drupal_get_path('module', 'stanford_jumpstart_home') . "/stanford_jumpstart_home.info";
   $info = drupal_parse_info_file($filename);
   $layouts = $info['layout'];
-  $install_profile = variable_get('install_profile', 'stanford');
-
   $form['layouts']["#tree"] = TRUE;
 
   foreach ($layouts as $index => $config) {
 
-    $allowed = explode(",", str_replace(" ", "", $config['product']));
-    if (!in_array($install_profile, $allowed)) {
-      continue;
-    }
-
     $context = context_load($config['context']);
     $options = variable_get('sjh_' . $context->name, array());
     $key = $context->name;;
+    $access = user_access('see enabled homepage options');
+
+    if (!$options['site_admin']) {
+      $access = user_access('see disabled homepage options');
+    }
 
     // Field Group
     $form['layouts'][$key] = array(
@@ -165,13 +171,21 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
           'homepage-layout',
         ),
       ),
+      '#access' => $access,
     );
 
-    // Move the selected option to the top of the pile!
     if (!$context->disabled) {
-      // $form['layouts'][$key]['#weight'] = -10;
       $form['layouts'][$key]["#attributes"]['class'][] = "selected";
     }
+
+    // Show this option to site owner
+    $form['layouts'][$key]['site_admin'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Enable this option.'),
+      '#description' => t('This checkbox enables users with the "See enabled homepage options" permission to select this layout.'),
+      '#default_value' => isset($options['site_admin']) ? $options['site_admin'] : "",
+      '#access' => user_access('see disabled homepage options'),
+    );
 
     // Thumbnail
     $img_path = drupal_get_path('module', 'stanford_jumpstart_home') . "/img/" . $config['thumb'];
@@ -295,7 +309,6 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
     unset($config['thumb']);
     unset($config['title']);
     unset($config['description']);
-    unset($config['product']);
 
     if (count($config) >= 1) {
       $form['layouts'][$key]['submit'] = array(
@@ -329,12 +342,13 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
 
   // $form['design_container']['styles']['#title'] = t('Styles');
 
-  // $form['submit'] = array(
-  //   '#type' => 'submit',
-  //   '#value' => t('Save settings'),
-  //   '#prefix' => "<div style=\"clear: both;\">",
-  //   '#suffix' => "</div>",
-  // );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save settings'),
+    '#prefix' => "<div style=\"clear: both;\">",
+    '#suffix' => "</div>",
+    '#access' => user_access('see disabled homepage options'),
+  );
 
   return $form;
 }
