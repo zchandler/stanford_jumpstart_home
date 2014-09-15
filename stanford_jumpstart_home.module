@@ -284,43 +284,51 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
       );
     }
 
-    $form['layouts'][$key]['submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('Save settings'),
-      '#states' => array(
-        'invisible' => array(
-         ':input[name="layouts[' . $key . '][selectedstate]"]' => array('value' => 1),
-        ),
-      ),
-    );
+    unset($config['context']);
+    unset($config['thumb']);
+    unset($config['title']);
+    unset($config['description']);
 
+    if (count($config) >= 1) {
+
+      $form['layouts'][$key]['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Save settings'),
+        '#states' => array(
+          'invisible' => array(
+           ':input[name="layouts[' . $key . '][selectedstate]"]' => array('value' => 1),
+          ),
+        ),
+      );
+
+    }
 
   } // End for each loop
 
   // Pull theme options from the theme itself
 
   // Include theme-settings.php
-  require_once drupal_get_path('theme', 'stanford_light') . "/theme-settings.php";
-  $theme_form = array();
+  // require_once drupal_get_path('theme', 'stanford_light') . "/theme-settings.php";
+  // $theme_form = array();
 
-  // Set the theme temporarily
-  $GLOBALS['theme_key'] = 'stanford_light';
-  stanford_light_form_system_theme_settings_alter($theme_form, $form_state);
+  // // Set the theme temporarily
+  // $GLOBALS['theme_key'] = 'stanford_light';
+  // stanford_light_form_system_theme_settings_alter($theme_form, $form_state);
 
-  $form['design_container'] = $theme_form['design_container'];
-  $form['design_container']['#attributes']["style"] = array("width: 100%;");
-  $form['design_container']['#tree'] = TRUE;
-  $form['design_container']['#collapsible'] = FALSE;
-  $form['design_container']['#title'] = t('Choose styles');
+  // $form['design_container'] = $theme_form['design_container'];
+  // $form['design_container']['#attributes']["style"] = array("width: 100%;");
+  // $form['design_container']['#tree'] = TRUE;
+  // $form['design_container']['#collapsible'] = FALSE;
+  // $form['design_container']['#title'] = t('Choose styles');
 
-  $form['design_container']['styles']['#title'] = t('Styles');
+  // $form['design_container']['styles']['#title'] = t('Styles');
 
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Save settings'),
-    '#prefix' => "<div style=\"clear: both;\">",
-    '#suffix' => "</div>",
-  );
+  // $form['submit'] = array(
+  //   '#type' => 'submit',
+  //   '#value' => t('Save settings'),
+  //   '#prefix' => "<div style=\"clear: both;\">",
+  //   '#suffix' => "</div>",
+  // );
 
   return $form;
 }
@@ -366,13 +374,11 @@ function stanford_jumpstart_homepage_dashboard_form_submit($form, $form_state) {
   }
 
   // Save the theme settings
-  $theme_settings = variable_get('theme_stanford_light_settings', array());
-
-  foreach ($values['design_container'] as $key => $value) {
-    $theme_settings[$key] = $value;
-  }
-
-  variable_set('theme_stanford_light_settings', $theme_settings);
+  // $theme_settings = variable_get('theme_stanford_light_settings', array());
+  // foreach ($values['design_container'] as $key => $value) {
+  //   $theme_settings[$key] = $value;
+  // }
+  // variable_set('theme_stanford_light_settings', $theme_settings);
 
   drupal_set_message('Customized design options saved', 'status');
 
@@ -434,10 +440,6 @@ function stanford_jumpstart_home_process_file_managed($element, &$form_state, $f
  */
 function stanford_jumpstart_home_process_html(&$vars) {
   global $theme;
-  // Currently only compatible with Stanford Light.
-  if ($theme !== "stanford_light") {
-    return;
-  }
 
   $context_name = variable_get('stanford_jumpstart_home_active', '');
 
@@ -482,11 +484,6 @@ function stanford_jumpstart_home_process_html(&$vars) {
  * @return [type]       [description]
  */
 function stanford_jumpstart_home_process_page(&$vars) {
-  global $theme;
-  // Currently only compatible with Stanford Light.
-  if ($theme !== "stanford_light") {
-    return;
-  }
 
   $context_name = variable_get('stanford_jumpstart_home_active', '');
 
