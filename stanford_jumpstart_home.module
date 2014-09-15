@@ -204,6 +204,12 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
       '#value' => $config['context'],
     );
 
+    // State machine, or just form states.
+    $form['layouts'][$key]["selectedstate"] = array(
+      '#type' => 'hidden',
+      '#value' => $context->disabled,
+    );
+
     // Header Image Field
     if (!empty($config['header_image'])) {
       $form['layouts'][$key]['header_image'] = array(
@@ -213,6 +219,11 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
         '#default_value' => isset($options['header_image']) ? $options['header_image'] : "",
         '#upload_location' => 'public://stanford_jumpstart_home/header/',
         '#process' => array('stanford_jumpstart_home_process_file_managed'),
+        '#states' => array(
+          'invisible' => array(
+           ':input[name="layouts[' . $key . '][selectedstate]"]' => array('value' => 1),
+          ),
+        ),
       );
     }
 
@@ -225,6 +236,11 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
         '#default_value' => isset($options['background_image']) ? $options['background_image'] : "",
         '#upload_location' => 'public://stanford_jumpstart_home/background/',
         '#process' => array('stanford_jumpstart_home_process_file_managed'),
+        '#states' => array(
+          'invisible' => array(
+           ':input[name="layouts[' . $key . '][selectedstate]"]' => array('value' => 1),
+          ),
+        ),
       );
     }
 
@@ -240,6 +256,11 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
           '#000000' => t('black'),
         ),
         '#default_value' => isset($options['color']) ? $options['color'] : '',
+        '#states' => array(
+          'invisible' => array(
+           ':input[name="layouts[' . $key . '][selectedstate]"]' => array('value' => 1),
+          ),
+        ),
       );
     }
 
@@ -255,9 +276,26 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
           'dark' => t('Dark'),
         ),
         "#default_value" => isset($options['light_dark']) ? $options['light_dark'] : 'light',
+        '#states' => array(
+          'invisible' => array(
+           ':input[name="layouts[' . $key . '][selectedstate]"]' => array('value' => 1),
+          ),
+        ),
       );
     }
-  }
+
+    $form['layouts'][$key]['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Save settings'),
+      '#states' => array(
+        'invisible' => array(
+         ':input[name="layouts[' . $key . '][selectedstate]"]' => array('value' => 1),
+        ),
+      ),
+    );
+
+
+  } // End for each loop
 
   // Pull theme options from the theme itself
 
@@ -272,6 +310,10 @@ function stanford_jumpstart_homepage_dashboard_form($form, $form_state) {
   $form['design_container'] = $theme_form['design_container'];
   $form['design_container']['#attributes']["style"] = array("width: 100%;");
   $form['design_container']['#tree'] = TRUE;
+  $form['design_container']['#collapsible'] = FALSE;
+  $form['design_container']['#title'] = t('Choose styles');
+
+  $form['design_container']['styles']['#title'] = t('Styles');
 
   $form['submit'] = array(
     '#type' => 'submit',
