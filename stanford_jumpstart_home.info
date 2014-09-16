@@ -11,6 +11,14 @@ project status url = https://github.com/SU-SWS/stanford_jumpstart_home
 dependencies[] = context
 dependencies[] = ctools
 
+layout[palm][context]           = stanford_jumpstart_home_panama
+layout[palm][thumb]             = default.jpg
+layout[palm][title]             = "Panama"
+layout[palm][description]       = "Includes:<ul><li>9 column banner BEAN</li><li>News</li><li>Events</li><li>Affiliated Programs</li><li>About block</li><li>Spotlight block</li><li>first sidebar</li></ul>"
+# layout[palm][light_dark]        = FALSE
+# layout[palm][background_image]  = FALSE
+# layout[palm][color]             = FALSE
+
 layout[palm][context]           = stanford_jumpstart_home_palm
 layout[palm][thumb]             = default.jpg
 layout[palm][title]             = "Palm"
@@ -23,7 +31,7 @@ layout[palm][description]       = "Includes:<ul><li>Tall, full-width Banner</li>
 layout[mayfield][context]           = stanford_jumpstart_home_mayfield
 layout[mayfield][thumb]             = default.jpg
 layout[mayfield][title]             = "Mayfield"
-layout[mayfield][description]       = "Inludes:<ul><li>Lead Text Block</li><li>Testimonial block</li><li>About block</li><li>Spotlight block</li><li>Small Announcements block</li></ul>"
+layout[mayfield][description]       = "Includes:<ul><li>Lead Text Block</li><li>Testimonial block</li><li>About block</li><li>Spotlight block</li><li>Small Announcements block</li></ul>"
 layout[mayfield][header_image]      = TRUE
 layout[mayfield][light_dark]        = TRUE
 # layout[mayfield][background_image]  = FALSE
