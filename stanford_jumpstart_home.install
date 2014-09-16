@@ -9,7 +9,25 @@
  * Implements hook_install().
  */
 function stanford_jumpstart_home_install() {
-  variable_set('stanford_jumpstart_home_active', 'test_context_one');
+  variable_set('stanford_jumpstart_home_active', 'stanford_jumpstart_home_palm');
+
+  // Insert menu item into shortcuts bar...
+  // Check for existance of the menu.
+
+  $menu = menu_load('menu-admin-shortcuts-ready-to-la');
+  if (!$menu) {
+    return;
+  }
+
+  $menu_link = array(
+    'link_path' => drupal_get_normal_path('admin/stanford-jumpstart/customize-design'),
+    'link_title' => t('Customize Design'),
+    'menu_name' => 'menu-admin-shortcuts-ready-to-la',
+    'weight' => -5,
+  );
+
+  menu_link_save($menu_link);
+
 }
 
 /**
